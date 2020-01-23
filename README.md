@@ -1,27 +1,64 @@
 # AngularNewstructure
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.2.2.
+Angular Modules:
 
-## Development server
+import { NgModule } from '@angular/core';
+import { HttpTestComponent } from './components/http-test.component';
+import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http'; 
+ 
+ 
+@NgModule({
+  declarations: [HttpTestComponent],
+  imports: [
+    CommonModule,
+    HttpClientModule
+  ],
+  exports: [HttpTestComponent]
+})
+ 
+export class SharedModule { }
+ 
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Shared module kan componenten binnen deze module, sharen met andere componenten. Willen ze de selector gebruiken, dan MOET de component ook gedeclareerd worden in de exports! 
 
-## Code scaffolding
+App.module.ts:
+@NgModule({
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    SharedModule
+  ],
+app.component.html:
+<div>
+  <app-http-test></app-http-test>
+</div>
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+-------------------------------------------------
 
-## Build
+Services Angular:
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+import { Injectable } from '@angular/core';
+ 
+@Injectable({
+  providedIn: 'root'  //can also be f.e. ‘UserModule’
+})
+export class HttpService {
+ 
+  constructor() { }
+}
+ 
 
-## Running unit tests
+Injectable provided in: ‘root’ zal de service op root niveau eenmalig declareren als singleton, geshared onder alle components. Als men liever de service enkel in bepaalde modules wil toelaten dan kan men een specific module meegeven in providedIn. Een andere optie is om hem mee te geven in de module zelf:
+@NgModule({
+  providers: [UserService],
+})
+export class UserModule {
+}
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-## Running end-to-end tests
+-------------------------------------------
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+Directives angular:
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+directives zijn extended HTML attributen om custom logic uit te voeren zoals *ngIf of *ngForEach. Men kan ook zijn eigen directives declareren en gebruiken!
