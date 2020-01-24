@@ -4,8 +4,8 @@ import { HttpTestComponent } from './shared/components/http-test.component';
 
 const routes: Routes = [
   { path: 'heroes',    loadChildren: './heroes/heroes.module#HeroesModule'},
-  { path: 'another',    component: HttpTestComponent},
-  { path: 'last',    loadChildren: './heroes/heroes.module#HeroesModule'},
+  { path: 'another',   loadChildren: './shared/shared.module#SharedModule'},
+  { path: 'last',     component: HttpTestComponent},
 ];
 
 @NgModule({
